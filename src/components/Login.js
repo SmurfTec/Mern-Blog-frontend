@@ -4,7 +4,6 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
@@ -14,6 +13,7 @@ import axios from 'axios';
 import { API_BASE_URL } from 'utils/constants';
 import { toast } from 'react-toastify';
 import { AuthContext } from 'contexts/AuthContext';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -90,8 +90,16 @@ const Login = () => {
     } catch (err) {
       console.log(`err`, err);
       let msg = 'Something Went Wrong';
-      if (err.response && err.response.data)
+
+      if (err.message) msg = err.message;
+      if (
+        err.response &&
+        err.response.data &&
+        err.response.data.message
+      )
         msg = err.response.data.message;
+
+      console.log(`err.message`, err.message);
 
       toast.error(msg);
 
@@ -159,12 +167,12 @@ const Login = () => {
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href='#' variant='body2'>
+              <Link to='/forgot' variant='body2'>
                 Forgot password?
               </Link>
             </Grid>
             <Grid item>
-              <Link href='#' variant='body2'>
+              <Link to='/signUp' variant='body2'>
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>

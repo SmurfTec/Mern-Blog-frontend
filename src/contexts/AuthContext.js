@@ -34,7 +34,7 @@ export const AuthProvider = withRouter(({ children, history }) => {
 
       console.log(`children`, children);
       console.log(`history`, history);
-      history.push('/');
+      // history.push('/');
     }
   };
 
