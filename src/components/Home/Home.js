@@ -130,12 +130,13 @@ const Home = ({ users }) => {
                   </thead>
                   <tbody>
                     {posts &&
-                      posts.map((post, i) => {
+                      posts.length > 0 &&
+                      posts.map((post, i) => (
                         <tr>
-                          <td> i+1</td>
-                          <td> post.title</td>
-                          <td> post.category.title</td>
-                          <td> post.getFormattedDate()</td>
+                          <td> {i + 1}</td>
+                          <td> {post.title}</td>
+                          <td> {post.category.title}</td>
+                          <td> {post.getFormattedDate}</td>
                           <td>
                             <a
                               href={`post/${post._id}`}
@@ -146,8 +147,8 @@ const Home = ({ users }) => {
                               Show Post
                             </a>
                           </td>
-                        </tr>;
-                      })}
+                        </tr>
+                      ))}
                   </tbody>
                 </table>
               </div>

@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { withRouter } from 'react-router';
 import { toast } from 'react-toastify';
 import { handleCatch, makeReq } from 'utils/constants';
+import { AuthContext } from './AuthContext';
 
 export const PostContext = React.createContext();
 
@@ -9,10 +10,13 @@ export const PostProvider = withRouter(({ children, history }) => {
   const [posts, setPosts] = useState([]);
   const [categories, setCategories] = useState([]);
 
+  const { user } = useContext(AuthContext);
+
   useEffect(() => {
+    if (!user || user === null) return;
     getPosts();
     getCategories();
-  }, []);
+  }, [user]);
 
   const getPosts = async () => {
     try {
