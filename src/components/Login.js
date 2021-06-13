@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import axios from 'axios';
-import { API_BASE_URL } from 'utils/constants';
+import { API_BASE_URL, handleCatch } from 'utils/constants';
 import { toast } from 'react-toastify';
 import { AuthContext } from 'contexts/AuthContext';
 import { Link } from 'react-router-dom';
@@ -88,21 +88,7 @@ const Login = () => {
 
       signInUser(res.data.token, res.data.user);
     } catch (err) {
-      console.log(`err`, err);
-      let msg = 'Something Went Wrong';
-
-      if (err.message) msg = err.message;
-      if (
-        err.response &&
-        err.response.data &&
-        err.response.data.message
-      )
-        msg = err.response.data.message;
-
-      console.log(`err.message`, err.message);
-
-      toast.error(msg);
-
+      handleCatch(err);
       console.log(`fetching`, fetching);
       setFetching(false);
     } finally {

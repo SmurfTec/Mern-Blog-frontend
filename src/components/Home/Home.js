@@ -1,6 +1,72 @@
-import React from 'react';
+import { PostContext } from 'contexts/PostsContext';
+import React, { useContext, useEffect, useState } from 'react';
 
-const Home = ({ posts, categories, users }) => {
+const Home = ({ users }) => {
+  const { posts, categories, addNewCategory, addNewPost } =
+    useContext(PostContext);
+
+  const [postCat, setPostCat] = useState({
+    date: '',
+    _id: '',
+    title: (categories && categories[0] && categories[0].title) || '',
+    summary: '',
+    __v: 0,
+  });
+  useEffect(() => {
+    if (!categories || categories === null || categories.length === 0)
+      return;
+
+    setPostCat(categories[0]);
+  }, [categories]);
+  const initCatState = {
+    title: '',
+    summary: '',
+  };
+  const initPostState = {
+    postTitle: '',
+    postBody: '',
+  };
+
+  const [categoryState, setCategoryState] = useState(initCatState);
+  const [postState, setPostState] = useState(initPostState);
+
+  const handleAddCategory = (e) => {
+    // e.preventDefault();
+    console.log(`categoryState`, categoryState);
+    addNewCategory(categoryState);
+    setCategoryState(initCatState);
+  };
+
+  const handleAddPost = (e) => {
+    console.log(`postState`, postState);
+    console.log(`postCat`, postCat);
+
+    addNewPost({ ...postState, postCat });
+  };
+
+  const handleCatChange = (e) => {
+    setCategoryState({
+      ...categoryState,
+      [e.target.name]: e.target.value,
+    });
+  };
+  const handlePostChange = (e) => {
+    console.log('Bitch GOt here');
+    console.log(`e.target.name`, e.target.name);
+    console.log(`e.target.value`, e.target.value);
+
+    setPostState({
+      ...postState,
+      [e.target.name]: e.target.value,
+    });
+  };
+  const handlePostCatChange = (e) => {
+    console.log('DOG GOt here');
+    console.log(`e.target.name`, e.target.name);
+
+    setPostCat(e.target.value);
+  };
+
   return (
     <div>
       <header id='main-header' className='py-2 bg-primary text-white'>
@@ -67,13 +133,13 @@ const Home = ({ posts, categories, users }) => {
                       posts.map((post, i) => {
                         <tr>
                           <td> i+1</td>
-                          <td> post[i].title</td>
-                          <td> post[i].category.title</td>
-                          <td> post[i].getFormattedDate()</td>
+                          <td> post.title</td>
+                          <td> post.category.title</td>
+                          <td> post.getFormattedDate()</td>
                           <td>
                             <a
-                              href={`post/${post[i]._id}`}
-                              // href={`post/{post[i].id}`}
+                              href={`post/${post._id}`}
+                              // href={`post/{post.id}`}
                               className='btn btn-secondary'
                             >
                               <i className='fas fa-angle-double-right' />
@@ -137,7 +203,6 @@ const Home = ({ posts, categories, users }) => {
         </div>
       </section>
       {/* FOOTER */}
-      &lt;%- include ('partials/footer') -%&gt;
       {/* MODALS */}
       {/* ADD POST MODAL */}
       <div className='modal fade' id='addPostModal'>
@@ -151,35 +216,56 @@ const Home = ({ posts, categories, users }) => {
             </div>
             <div className='modal-body'>
               <form>
-                <div className='form-group'>
+                <div
+                  className='form-group'
+                  style={{ textAlign: 'left' }}
+                >
                   <label htmlFor='title'>Title</label>
                   <input
                     type='text'
                     className='form-control'
+                    style={{ textAlign: 'left' }}
                     id='postTitle'
+                    name='postTitle'
+                    value={postState.postTitle}
+                    onChange={handlePostChange}
                   />
                   <span className='invalid-feedback'>
                     A Post must contain a title !
                   </span>
                 </div>
-                <div className='form-group'>
+                <div
+                  className='form-group'
+                  style={{ textAlign: 'left' }}
+                >
                   <label htmlFor='category'>Category</label>
-                  <select className='form-control' id='postCat'>
-                    {categories &&
-                      categories.map((cat, i) => {
-                        <option value={`cat[i].title`}>
-                          {cat[i].title}
-                        </option>;
-                      })}
+                  <select
+                    className='form-control'
+                    style={{ textAlign: 'left' }}
+                    id='postCat'
+                    value={postCat.title}
+                    name='postCat'
+                    onChange={handlePostCatChange}
+                  >
+                    {categories.map((el) => (
+                      <option key={el._id} value={el.title}>
+                        {el.title}
+                      </option>
+                    ))}
                   </select>
                 </div>
-                <div className='form-group'>
+                <div
+                  className='form-group'
+                  style={{ textAlign: 'left' }}
+                >
                   <label htmlFor='body'>Body</label>
                   <textarea
-                    name='editor1'
+                    name='postBody'
                     className='form-control'
+                    style={{ textAlign: 'left' }}
                     id='postBody'
-                    defaultValue={''}
+                    value={postState.postBody}
+                    onChange={handlePostChange}
                   />
                   <span className='invalid-feedback'>
                     A Post must contain a Body !
@@ -192,6 +278,7 @@ const Home = ({ posts, categories, users }) => {
                 className='btn btn-primary'
                 data-dismiss
                 id='addPost'
+                onClick={handleAddPost}
               >
                 Save Changes
               </button>
@@ -210,28 +297,41 @@ const Home = ({ posts, categories, users }) => {
               </button>
             </div>
             <div className='modal-body'>
-              <form method='POST' action='/categories'>
-                <div className='form-group'>
+              <form onSubmit={handleAddCategory}>
+                <div
+                  className='form-group'
+                  style={{ textAlign: 'left' }}
+                >
                   <label htmlFor='title'>Title</label>
                   <input
                     type='text'
                     className='form-control'
+                    style={{ textAlign: 'left' }}
                     id='title'
+                    name='title'
+                    value={categoryState.title}
+                    onChange={handleCatChange}
                   />
                   <div className='invalid-feedback'>
                     This is required field
                   </div>
                 </div>
-                <div className='form-group'>
+                <div
+                  className='form-group'
+                  style={{ textAlign: 'left' }}
+                >
                   <label htmlFor='Summary'>Summary</label>
                   <textarea
                     name='cat'
                     id='summary'
+                    name='summary'
                     className='form-control'
+                    style={{ textAlign: 'left' }}
                     rows={3}
                     aria-describedby='helpId'
                     required='required'
-                    defaultValue={''}
+                    onChange={handleCatChange}
+                    value={categoryState.summary}
                   />
                   <small id='helpId' className='text-muted'>
                     A Short Explanation of Category
@@ -247,6 +347,7 @@ const Home = ({ posts, categories, users }) => {
                 className='btn btn-success'
                 data-dismiss
                 id='addCat'
+                onClick={handleAddCategory}
               >
                 Add Category
               </button>

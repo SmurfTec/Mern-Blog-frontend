@@ -8,6 +8,9 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 import { AuthContext } from 'contexts/AuthContext';
 import Home from 'components/Home/Home';
 import DashboardLayout from 'Layouts/Dashboard.layout';
+import Posts from 'components/Posts/Posts';
+import Post from 'components/Posts/Post';
+import Profile from 'components/Profile/Profile';
 
 const App = () => {
   const { token, user } = useContext(AuthContext);
@@ -16,7 +19,7 @@ const App = () => {
       {token ? (
         <>
           {user ? (
-            <>
+            <Switch>
               <DashboardLayout
                 exact
                 path='/'
@@ -25,9 +28,42 @@ const App = () => {
                 categories={[]}
                 users={[]}
               />
+              <DashboardLayout
+                exact
+                path='/posts'
+                component={Posts}
+                posts={[]}
+                categories={[]}
+                users={[]}
+              />
+              <DashboardLayout
+                exact
+                path='/posts/:id'
+                component={Post}
+                posts={[]}
+                categories={[]}
+                users={[]}
+              />
+
+              <DashboardLayout
+                exact
+                path='/profile'
+                component={Profile}
+                posts={[]}
+                categories={[]}
+                users={[]}
+              />
+              {/* <DashboardLayout
+                  exact
+                  path='/'
+                  component={Home}
+                  posts={[]}
+                  categories={[]}
+                  users={[]}
+                /> */}
               <Route exact path='/logout' component={Logout} />
               <Redirect to='/' />
-            </>
+            </Switch>
           ) : (
             <div className='loader'></div>
           )}

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Navbar = ({ user }) => {
   return (
@@ -17,31 +18,31 @@ const Navbar = ({ user }) => {
         <div className='collapse navbar-collapse' id='navbarCollapse'>
           <ul className='navbar-nav'>
             <li className='nav-item px-2'>
-              <a href='/' className='nav-link'>
+              <Link to='/' className='nav-link'>
                 Dashboard
-              </a>
+              </Link>
             </li>
             <li className='nav-item px-2'>
-              <a href='/posts' className='nav-link'>
+              <Link to='/posts' className='nav-link'>
                 Posts
-              </a>
+              </Link>
             </li>
-            <li className='nav-item px-2'>
-              <a href='/categories' className='nav-link'>
+            {/* <li className='nav-item px-2'>
+              <Link to='/categories' className='nav-link'>
                 Categories
-              </a>
-            </li>
+              </Link>
+            </li> */}
             <li className='nav-item px-2'>
-              <a href='/users' className='nav-link'>
+              <Link to='/users' className='nav-link'>
                 Users
-              </a>
+              </Link>
             </li>
           </ul>
 
           <ul className='navbar-nav ml-auto'>
             <li className='nav-item dropdown mr-3'>
-              <a
-                href='/'
+              <Link
+                to='/'
                 className='nav-link dropdown-toggle'
                 data-toggle='dropdown'
               >
@@ -55,20 +56,17 @@ const Navbar = ({ user }) => {
                   }}
                   alt=''
                 />
-              </a>
+              </Link>
               <div className='dropdown-menu'>
-                <a href='/profile' className='dropdown-item'>
+                <Link to='/profile' className='dropdown-item'>
                   <i className='fas fa-user-circle'></i> Profile
-                </a>
-                <a href='/settings' className='dropdown-item'>
-                  <i className='fas fa-cog'></i> Settings
-                </a>
+                </Link>
               </div>
             </li>
             <li className='nav-item'>
-              <a href='/logout' className='nav-link'>
+              <Link to='/logout' className='nav-link'>
                 <i className='fas fa-user-times'></i> Logout
-              </a>
+              </Link>
             </li>
           </ul>
         </div>

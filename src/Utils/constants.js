@@ -1,3 +1,5 @@
+import { toast } from 'react-toastify';
+
 const API_BASE_URL = `http://localhost:5000/api`;
 
 const makeReq = (
@@ -40,4 +42,16 @@ const makeReq = (
   );
 };
 
-export { API_BASE_URL, makeReq };
+const handleCatch = (err) => {
+  console.log(`err`, err);
+  let msg = 'Something Went Wrong';
+
+  if (err.message) msg = err.message;
+  if (err.response && err.response.data && err.response.data.message)
+    msg = err.response.data.message;
+
+  console.log(`err.message`, err.message);
+
+  toast.error(msg);
+};
+export { API_BASE_URL, makeReq, handleCatch };
