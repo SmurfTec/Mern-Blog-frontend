@@ -8,13 +8,31 @@ import ConfirmDeleteDialog from 'dialogs/ConfirmDialogBox';
 
 const Post = ({ match, history }) => {
   const { user } = useContext(AuthContext);
-  const { deletePost } = useContext(PostsContext);
+  const { deletePost, updatePost } = useContext(PostsContext);
+
+  const initPostState = {
+    postTitle: '',
+    postBody: '',
+  };
+
+  const [postState, setPostState] = useState(initPostState);
 
   const [post, setPost] = useState();
   const [like, setLike] = useState(false);
   const [comments, setComments] = useState();
   const [Likes, setLikes] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
+
+  const handlePostChange = (e) => {
+    console.log('Bitch GOt here');
+    console.log(`e.target.name`, e.target.name);
+    console.log(`e.target.value`, e.target.value);
+
+    setPostState({
+      ...postState,
+      [e.target.name]: e.target.value,
+    });
+  };
 
   const toggleConfirmModal = () => {
     setShowConfirmModal(!showConfirmModal);
@@ -34,6 +52,10 @@ const Post = ({ match, history }) => {
         setComments(data.comments);
         setLike(data.like);
         setLikes(data.likes);
+        setPostState({
+          postBody: data.post.body,
+          postTitle: data.post.title,
+        });
       } catch (err) {
         history.push('/posts');
       }
@@ -57,6 +79,10 @@ const Post = ({ match, history }) => {
     deletePost(match.params.id);
   };
 
+  const handleUpdatePost = () => {
+    console.log('here');
+    updatePost({ title: post.title, body: post.body }, post._id);
+  };
   return (
     <div>
       <header id='main-header' className='py-2 bg-primary text-white'>
@@ -181,6 +207,69 @@ const Post = ({ match, history }) => {
         dialogTitle={'Delete This Post ?'}
         success={handleDelete}
       />
+
+      <div className='modal fade' id='editPostModal'>
+        <div className='modal-dialog modal-lg'>
+          <div className='modal-content'>
+            <div className='modal-header bg-primary text-white'>
+              <h5 className='modal-title'>Add Post</h5>
+              <button className='close' data-dismiss='modal'>
+                <span>×</span>
+              </button>
+            </div>
+            <div className='modal-body'>
+              <form>
+                <div
+                  className='form-group'
+                  style={{ textAlign: 'left' }}
+                >
+                  <label htmlFor='title'>Title</label>
+                  <input
+                    type='text'
+                    className='form-control'
+                    style={{ textAlign: 'left' }}
+                    id='postTitle'
+                    name='postTitle'
+                    value={postState.postTitle}
+                    onChange={handlePostChange}
+                  />
+                  <span className='invalid-feedback'>
+                    A Post must contain a title !
+                  </span>
+                </div>
+
+                <div
+                  className='form-group'
+                  style={{ textAlign: 'left' }}
+                >
+                  <label htmlFor='body'>Body</label>
+                  <textarea
+                    name='postBody'
+                    className='form-control'
+                    style={{ textAlign: 'left' }}
+                    id='postBody'
+                    value={postState.postBody}
+                    onChange={handlePostChange}
+                  />
+                  <span className='invalid-feedback'>
+                    A Post must contain a Body !
+                  </span>
+                </div>
+              </form>
+            </div>
+            <div className='modal-footer'>
+              <button
+                className='btn btn-primary'
+                data-dismiss
+                id='addPost'
+                onClick={handleUpdatePost}
+              >
+                Save Changes
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

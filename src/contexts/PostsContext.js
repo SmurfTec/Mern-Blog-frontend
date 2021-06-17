@@ -91,6 +91,23 @@ export const PostsProvider = withRouter(({ children, history }) => {
     })();
   };
 
+  const updatePost = async (postObj, postId) => {
+    console.log(`postObj`, postObj);
+    (async () => {
+      const data = await makeReq(
+        `/posts/${postId}`,
+        { body: postObj },
+        'PATCH'
+      );
+      console.log(`data`, data);
+      toast.success('Post updated successfully !');
+      setPosts(posts.map((post) => post._id !== postId));
+      // setTimeout(() => {
+      //   history.push('/posts');
+      // }, 500);
+    })();
+  };
+
   return (
     <PostsContext.Provider
       value={{
@@ -99,6 +116,7 @@ export const PostsProvider = withRouter(({ children, history }) => {
         addNewCategory,
         addNewPost,
         deletePost,
+        updatePost,
       }}
     >
       {children}
