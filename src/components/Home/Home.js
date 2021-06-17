@@ -138,7 +138,7 @@ const Home = ({ users }) => {
                     {posts &&
                       posts.length > 0 &&
                       posts.map((post, i) => (
-                        <tr>
+                        <tr key={i}>
                           <td> {i + 1}</td>
                           <td> {post.title}</td>
                           <td> {post.category.title}</td>

@@ -102,9 +102,10 @@ export const PostsProvider = withRouter(({ children, history }) => {
       console.log(`data`, data);
       toast.success('Post updated successfully !');
       setPosts(posts.map((post) => post._id !== postId));
-      // setTimeout(() => {
-      //   history.push('/posts');
-      // }, 500);
+
+      setTimeout(() => {
+        window.location.reload();
+      }, 500);
     })();
   };
 
