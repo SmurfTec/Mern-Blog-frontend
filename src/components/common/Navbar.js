@@ -5,9 +5,9 @@ const Navbar = ({ user }) => {
   return (
     <nav className='navbar navbar-expand-sm navbar-dark bg-dark p-0'>
       <div className='container'>
-        <a href='/' className='navbar-brand'>
+        <Link to='/' className='navbar-brand'>
           Blogen
-        </a>
+        </Link>
         <button
           className='navbar-toggler'
           data-toggle='collapse'
@@ -25,16 +25,6 @@ const Navbar = ({ user }) => {
             <li className='nav-item px-2'>
               <Link to='/posts' className='nav-link'>
                 Posts
-              </Link>
-            </li>
-            {/* <li className='nav-item px-2'>
-              <Link to='/categories' className='nav-link'>
-                Categories
-              </Link>
-            </li> */}
-            <li className='nav-item px-2'>
-              <Link to='/users' className='nav-link'>
-                Users
               </Link>
             </li>
           </ul>

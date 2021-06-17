@@ -1,9 +1,10 @@
-import { PostContext } from 'contexts/PostsContext';
+import { PostsContext } from 'contexts/PostsContext';
 import React, { useContext, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const Home = ({ users }) => {
   const { posts, categories, addNewCategory, addNewPost } =
-    useContext(PostContext);
+    useContext(PostsContext);
 
   const [postCat, setPostCat] = useState({
     date: '',
@@ -112,8 +113,13 @@ const Home = ({ users }) => {
       {/* POSTS */}
       <section id='posts'>
         <div className='container'>
-          <div className='row'>
-            <div className='col-md-9'>
+          <div
+            className='row'
+            style={{
+              justifyContent: 'space-between',
+            }}
+          >
+            <div className='col-xs-12 mb-5'>
               <div className='card'>
                 <div className='card-header'>
                   <h4>Latest Posts</h4>
@@ -138,14 +144,14 @@ const Home = ({ users }) => {
                           <td> {post.category.title}</td>
                           <td> {post.getFormattedDate}</td>
                           <td>
-                            <a
-                              href={`post/${post._id}`}
+                            <Link
+                              to={`posts/${post._id}`}
                               // href={`post/{post.id}`}
                               className='btn btn-secondary'
                             >
                               <i className='fas fa-angle-double-right' />
                               Show Post
-                            </a>
+                            </Link>
                           </td>
                         </tr>
                       ))}
@@ -153,7 +159,7 @@ const Home = ({ users }) => {
                 </table>
               </div>
             </div>
-            <div className='col-md-3'>
+            <div className='col-xs-12'>
               <div className='card text-center bg-primary text-white mb-3'>
                 <div className='card-body'>
                   <h3>Posts</h3>
@@ -161,12 +167,12 @@ const Home = ({ users }) => {
                     <i className='fas fa-pencil-alt' />
                     {posts && posts.length}
                   </h4>
-                  <a
-                    href='/posts'
+                  <Link
+                    to='/posts'
                     className='btn btn-outline-light btn-sm'
                   >
                     View
-                  </a>
+                  </Link>
                 </div>
               </div>
               <div className='card text-center bg-success text-white mb-3'>
@@ -176,27 +182,12 @@ const Home = ({ users }) => {
                     <i className='fas fa-folder' />
                     {categories && categories.length}
                   </h4>
-                  <a
-                    href='/categories'
+                  <Link
+                    to='/categories'
                     className='btn btn-outline-light btn-sm'
                   >
                     View
-                  </a>
-                </div>
-              </div>
-              <div className='card text-center bg-warning text-white mb-3'>
-                <div className='card-body'>
-                  <h3>Users</h3>
-                  <h4 className='display-4'>
-                    <i className='fas fa-users' />
-                    {users && users.length}
-                  </h4>
-                  <a
-                    href='/users'
-                    className='btn btn-outline-light btn-sm'
-                  >
-                    View
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>

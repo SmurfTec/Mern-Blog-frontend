@@ -43,9 +43,10 @@ export const AuthProvider = withRouter(({ children, history }) => {
     window.localStorage.setItem('jwt', tk);
     window.localStorage.setItem('user', us);
 
+    setToken(tk);
+    setUser(us);
     setTimeout(() => {
-      setToken(tk);
-      setUser(us);
+      history.push('/');
     }, 1000);
   };
 

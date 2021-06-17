@@ -57,12 +57,12 @@ const Profile = () => {
 
   return (
     <div>
-      <header id='main-header' class='py-2 bg-primary text-white'>
-        <div class='container'>
-          <div class='row'>
-            <div class='col-md-6'>
+      <header id='main-header' className='py-2 bg-primary text-white'>
+        <div className='container'>
+          <div className='row'>
+            <div className='col-md-6'>
               <h1>
-                <i class='fas fa-user'></i> Edit Profile
+                <i className='fas fa-user'></i> Edit Profile
               </h1>
             </div>
           </div>

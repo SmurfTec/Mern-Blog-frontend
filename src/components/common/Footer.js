@@ -2,7 +2,16 @@ import React from 'react';
 
 const Footer = () => {
   return (
-    <footer id='main-footer' className='bg-dark text-white p-1 %>'>
+    <footer
+      id='main-footer'
+      className='bg-dark text-white p-1'
+      style={{
+        position: 'fixed',
+        bottom: 0,
+        width: '100%',
+        maxHeight: 55,
+      }}
+    >
       <div className='container'>
         <div className='row'>
           <div className='col'>

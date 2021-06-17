@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,6 +12,7 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 import { API_BASE_URL } from 'utils/constants';
 import { Link } from 'react-router-dom';
+import { AuthContext } from 'contexts/AuthContext';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,11 +35,11 @@ const useStyles = makeStyles((theme) => ({
     width: '100%', // Fix IE 11 issue.
     marginTop: theme.spacing(3),
     '& label': {
-      color: '#fff',
+      color: '#000',
       fontFamily: `'Roboto", "Helvetica", "Arial", sans-serif'`,
     },
     '& input': {
-      color: '#fff',
+      color: '#000',
     },
   },
   submit: {
@@ -54,6 +55,8 @@ const useStyles = makeStyles((theme) => ({
 const SignUp = () => {
   const classes = useStyles();
   const [fetching, setFetching] = useState(false);
+  const { signInUser } = useContext(AuthContext);
+
   const initialState = {
     name: '',
     email: '',
@@ -89,6 +92,7 @@ const SignUp = () => {
       toast.success('Signup Succesfull');
       toast.success(`Signup Successfull ! Logging In`);
       resetState();
+      signInUser(res.data.token, res.data.user);
     } catch (err) {
       let msg = 'Something Went Wrong';
       if (err.response && err.response.data)

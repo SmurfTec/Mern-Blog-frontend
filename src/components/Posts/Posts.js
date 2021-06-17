@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 
-const Posts = ({ posts, categories, users }) => {
+import { PostsContext } from '../../contexts/PostsContext';
+
+const Posts = () => {
+  const { posts, categories } = useContext(PostsContext);
   return (
     <div>
       <header id='main-header' className='py-1 bg-primary text-white'>
@@ -56,10 +59,7 @@ const Posts = ({ posts, categories, users }) => {
                   <div className='card-header'>
                     <hgroup>
                       <h4>Latest Posts </h4>
-                      <h5>
-                        {posts && posts.length}
-                        Results
-                      </h5>
+                      <h5>{posts && posts.length} Results</h5>
                     </hgroup>
                   </div>
 
@@ -76,21 +76,23 @@ const Posts = ({ posts, categories, users }) => {
                     </thead>
                     <tbody id='searchBody'>
                       {posts &&
+                        posts.length > 0 &&
                         posts.map((post, i) => (
                           <tr>
                             <td>{i + 1}</td>
-                            <td>{post[i].title}</td>
-                            <td>{post[i].category.title}</td>
-                            <td>{post[i].getFormattedDate()}</td>
-                            <td>{post[i].user.name}</td>
+                            <td>{post.title}</td>
+                            <td>{post.category.title}</td>
+                            <td>{post.getFormattedDate}</td>
+                            <td>{post.user.name}</td>
                             <td>
-                              <link
-                                to='{`posts/${postf[i].id}`}'
+                              <Link
+                                to={`posts/${post.id}`}
                                 className='btn btn-secondary'
                                 style={{ cursor: 'pointer' }}
-                              />
-                              <i className='fas fa-angle-double-right' />
-                              Show post
+                              >
+                                <i className='fas fa-angle-double-right' />
+                                Show post
+                              </Link>
                             </td>
                           </tr>
                         ))}
@@ -127,9 +129,10 @@ const Posts = ({ posts, categories, users }) => {
                     <label htmlFor='category'>Category</label>
                     <select className='form-control' id='postCat'>
                       {categories &&
+                        categories.length > 0 &&
                         categories.map((cat, i) => (
-                          <option value='{cat.title}'>
-                            {cat[i].title}
+                          <option value={cat.title}>
+                            {cat.title}
                           </option>
                         ))}
                     </select>

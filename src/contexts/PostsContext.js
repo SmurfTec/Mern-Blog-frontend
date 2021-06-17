@@ -4,9 +4,9 @@ import { toast } from 'react-toastify';
 import { handleCatch, makeReq } from 'utils/constants';
 import { AuthContext } from './AuthContext';
 
-export const PostContext = React.createContext();
+export const PostsContext = React.createContext();
 
-export const PostProvider = withRouter(({ children, history }) => {
+export const PostsProvider = withRouter(({ children, history }) => {
   const [posts, setPosts] = useState([]);
   const [categories, setCategories] = useState([]);
 
@@ -79,11 +79,29 @@ export const PostProvider = withRouter(({ children, history }) => {
     }
   };
 
+  const deletePost = async (postId) => {
+    (async () => {
+      const data = await makeReq(`/posts/${postId}`, {}, 'DELETE');
+      console.log(`data`, data);
+      toast.success('Post deleted successfully !');
+      setPosts(posts.filter((post) => post._id !== postId));
+      setTimeout(() => {
+        history.push('/posts');
+      }, 500);
+    })();
+  };
+
   return (
-    <PostContext.Provider
-      value={{ posts, categories, addNewCategory, addNewPost }}
+    <PostsContext.Provider
+      value={{
+        posts,
+        categories,
+        addNewCategory,
+        addNewPost,
+        deletePost,
+      }}
     >
       {children}
-    </PostContext.Provider>
+    </PostsContext.Provider>
   );
 });

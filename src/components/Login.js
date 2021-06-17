@@ -37,10 +37,10 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(1),
     '& label': {
       fontFamily: `'Roboto", "Helvetica", "Arial", sans-serif'`,
-      color: '#fff',
+      color: '#000',
     },
     '& input': {
-      color: '#fff',
+      color: '#000',
     },
   },
   submit: {
@@ -152,11 +152,11 @@ const Login = () => {
             LogIn
           </Button>
           <Grid container>
-            <Grid item xs>
+            {/* <Grid item xs>
               <Link to='/forgot' variant='body2'>
                 Forgot password?
               </Link>
-            </Grid>
+            </Grid> */}
             <Grid item>
               <Link to='/signUp' variant='body2'>
                 {"Don't have an account? Sign Up"}
