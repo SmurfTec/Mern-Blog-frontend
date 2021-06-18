@@ -268,7 +268,7 @@ const Home = ({ users }) => {
             <div className='modal-footer'>
               <button
                 className='btn btn-primary'
-                data-dismiss
+                data-dismiss='modal'
                 id='addPost'
                 onClick={handleAddPost}
               >
@@ -337,7 +337,7 @@ const Home = ({ users }) => {
             <div className='modal-footer'>
               <button
                 className='btn btn-success'
-                data-dismiss
+                data-dismiss='modal'
                 id='addCat'
                 onClick={handleAddCategory}
               >

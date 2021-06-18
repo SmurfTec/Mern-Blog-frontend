@@ -33,19 +33,6 @@ const Posts = () => {
                 <i className='fas fa-plus' /> Add Post
               </Link>
             </div>
-            <div className='col-md-6 ml-auto'>
-              <div className='input-group'>
-                <input
-                  type='text'
-                  className='form-control'
-                  placeholder='Search Posts...'
-                  id='searchBtn'
-                />
-                <div className='input-group-append'>
-                  <button className='btn btn-primary'>Search</button>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </section>
